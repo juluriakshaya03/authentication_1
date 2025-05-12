@@ -8,6 +8,14 @@ import adminprofile from '../models/adminProfile';
 import Coache from "../models/coache";
 import Admin from "../models/admin";
 
+interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    role?: string;
+  };
+}
+
+
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { firstName, lastName, email, password, activity, target } = req.body;
@@ -107,5 +115,50 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+
+export const getUserProfile = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    // Check if user exists in request (set by auth middleware)
+
+    const userId = req.params.id || req.user?.id;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: 'Not authenticated'
+      });
+      return;
+    }
+
+    // Find user by ID
+    const user = await UserInfo.findById(userId).select('-password');
+    
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+      return;
+    }
+
+    // Return user information
+    res.status(200).json({
+      success: true,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role
+      // Add any other fields you need
+    });
+  } catch (error: any) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error while fetching profile',
+      error: error.message
+    });
   }
 };
