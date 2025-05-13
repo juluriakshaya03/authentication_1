@@ -149,6 +149,9 @@
 //       success: true,
 //       firstName: user.firstName,
 //       lastName: user.lastName
+//       lastName: user.lastName,
+//       email: user.email,
+//       role: user.role
 //       // Add any other fields you need
 //     });
 //   } catch (error: any) {
