@@ -46,9 +46,11 @@ profileRouter.get('/coach', getCoachController);
 profileRouter.get('/getCoachesByActivity', getCoachesByActivity);
 profileRouter.put('/change-password', updatePasswordController);
 profileRouter.put('/change-password', updatePasswordController);
-profileRouter.put('/coachInfo', getCoach);
-profileRouter.put('/userInfo', getUser);
-profileRouter.put('/getCoach_Id_spl', getCoach_Id_spl);
-profileRouter.put('/coach_by_userId', getCoachByUserId);
+profileRouter.put('/change-password', updatePasswordController);
+profileRouter.get('/getCoachesByActivity', getCoachesByActivity);
+profileRouter.get('/coachInfo', getCoach);
+profileRouter.get('/userInfo', getUser);
+profileRouter.get('/getCoach_Id_spl', getCoach_Id_spl);
+profileRouter.get('/coach_by_userId', getCoachByUserId);
 
 export default profileRouter;
